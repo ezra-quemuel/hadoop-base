@@ -1,5 +1,5 @@
 FROM centos:7.1.1503
-MAINTAINER andras.szerdahelyi@gmail.com
+MAINTAINER ezra.quemuel@gmail.com
 
 # Install pre-requisite packages..
 RUN yum -y install java-1.8.0-openjdk-devel-1.8.0.60-2.b27.el7_1 \
@@ -9,18 +9,18 @@ RUN yum -y install java-1.8.0-openjdk-devel-1.8.0.60-2.b27.el7_1 \
 	tar \
 	gzip
 	
-ADD http://mirror.catn.com/pub/apache/hadoop/common/hadoop-2.7.0/hadoop-2.7.0.tar.gz /opt/
+ADD http://mirror.catn.com/pub/apache/hadoop/common/hadoop-2.7.1/hadoop-2.7.1.tar.gz /opt/
 ADD https://pypi.python.org/packages/source/p/pip/pip-7.1.0.tar.gz#md5=d935ee9146074b1d3f26c5f0acfd120e /root/
 
 ADD etc/supervisord.conf /etc/supervisord.conf
 RUN cd /root && easy_install pip-7.1.0.tar.gz
 RUN pip install supervisor
-RUN cd /opt && tar xfv hadoop-2.7.0.tar.gz && rm hadoop-2.7.0.tar.gz
+RUN cd /opt && tar xfv hadoop-2.7.1.tar.gz && rm hadoop-2.7.1.tar.gz
 
 RUN useradd hadoop \
-	&& ln -s /opt/hadoop-2.7.0 /home/hadoop/hadoop-2.7.0 \
-	&& ln -s /opt/hadoop-2.7.0/etc/hadoop /etc/hadoop \
-	&& chown -R hadoop:hadoop /opt/hadoop-2.7.0
+	&& ln -s /opt/hadoop-2.7.1 /home/hadoop/hadoop-2.7.1 \
+	&& ln -s /opt/hadoop-2.7.1/etc/hadoop /etc/hadoop \
+	&& chown -R hadoop:hadoop /opt/hadoop-2.7.1
 
 ADD etc/hadoop/core-site.xml.erb /etc/hadoop/core-site.xml.erb
 
@@ -38,4 +38,4 @@ RUN chown hadoop /var/log/supervisor
 RUN chown hadoop /var/run/supervisor
 
 ENV JAVA_HOME /usr/lib/jvm/java-1.8.0-openjdk
-ENV PATH $PATH:/opt/hadoop-2.7.0/bin
+ENV PATH $PATH:/opt/hadoop-2.7.1/bin
