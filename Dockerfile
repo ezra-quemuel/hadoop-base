@@ -17,10 +17,10 @@ RUN cd /root && easy_install pip-7.1.0.tar.gz
 RUN pip install supervisor
 RUN cd /opt && tar xfv hadoop-2.7.1.tar.gz && rm hadoop-2.7.1.tar.gz
 
-RUN useradd hadoop \
-	&& ln -s /opt/hadoop-2.7.1 /home/hadoop/hadoop-2.7.1 \
+RUN useradd hdfs \
+	&& ln -s /opt/hadoop-2.7.1 /home/hdfs/hadoop-2.7.1 \
 	&& ln -s /opt/hadoop-2.7.1/etc/hadoop /etc/hadoop \
-	&& chown -R hadoop:hadoop /opt/hadoop-2.7.1
+	&& chown -R hdfs:hdfs /opt/hadoop-2.7.1
 
 ADD etc/hadoop/core-site.xml.erb /etc/hadoop/core-site.xml.erb
 
@@ -33,9 +33,9 @@ RUN mkdir -p $HADOOP_LOG_DIR
 RUN mkdir -p /var/log/supervisor
 RUN mkdir -p /var/run/supervisor
 
-RUN chown hadoop $HADOOP_LOG_DIR
-RUN chown hadoop /var/log/supervisor
-RUN chown hadoop /var/run/supervisor
+RUN chown hdfs $HADOOP_LOG_DIR
+RUN chown hdfs /var/log/supervisor
+RUN chown hdfs /var/run/supervisor
 
 ENV JAVA_HOME /usr/lib/jvm/java-1.8.0-openjdk
 # ENV JAVA_HOME /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.101-3.b13.el7_2.x86_64
